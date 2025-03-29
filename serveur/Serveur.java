@@ -1,10 +1,10 @@
-package serveur.document;
+package serveur;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 
-class Serveur implements Runnable {
+public class Serveur implements Runnable {
     private ServerSocket listen_socket;
     private Class<? extends Runnable> service;
 
