@@ -1,11 +1,14 @@
-package serveur.document;
+package serveur.service;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 public class Abonne {
     private int numero;
     private String nom;
-    private String dateNaissance;
+    private LocalDate dateNaissance;
 
-    public Abonne(int numero, String nom, String dateNaissance) {
+    public Abonne(int numero, String nom, LocalDate dateNaissance) {
         this.numero = numero;
         this.nom = nom;
         this.dateNaissance = dateNaissance;
@@ -27,13 +30,16 @@ public class Abonne {
         this.nom = nom;
     }
 
-    public String getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(String dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
+    public boolean isAdulte() {
+        return Period.between(getDateNaissance(), LocalDate.now()).getYears() >= 16;
+    }
 
 }

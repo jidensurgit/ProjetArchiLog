@@ -1,4 +1,4 @@
-package serveur;
+package serveur.service;
 
 import java.net.Socket;
 
@@ -23,9 +23,8 @@ public abstract class Service implements Runnable {
 
     public abstract void run();
 
-//    protected void finalize() throws Throwable {
-//        client.close();
-//    }
+    protected void finalize() throws Throwable {
+        client.close();
+    }
 
-    public abstract String toString();
 }

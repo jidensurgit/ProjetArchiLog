@@ -1,28 +1,31 @@
 package serveur;
 
-import java.io.*;
+import serveur.service.Mediateque;
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Serveur implements Runnable {
-    private ServerSocket listen_socket;
-    private Class<? extends Runnable> service;
+    private final ServerSocket listen_socket;
+    private final Class<? extends Runnable> service;
+    private final Mediateque mediateque;
 
     // Cree un serveur TCP — objet de la classe ServerSocket
-    public Serveur(int port, Class<? extends Runnable> service) throws IOException {
+    public Serveur(int port, Class<? extends Runnable> service, Mediateque mediateque) throws IOException {
         listen_socket = new ServerSocket(port);
         this.service = service;
+        this.mediateque = mediateque;
     }
 
-    // Le serveur ecoute et accepte les connexions.
-    // pour chaque connexion, il cree un ServiceInversion,
-    // qui va la traiter, et le lance
+
     public void run() {
         try {
             System.err.println("Lancement du serveur au port "+this.listen_socket.getLocalPort());
             while(true)
                 new Thread(
-                        this.service.getDeclaredConstructor(Socket.class).newInstance(listen_socket.accept()))
+                        this.service.getDeclaredConstructor(Socket.class, Mediateque.class).newInstance(listen_socket.accept(), mediateque))
                         .start();
         }
         catch (InstantiationException | IllegalAccessException e) {

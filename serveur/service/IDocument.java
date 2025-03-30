@@ -1,11 +1,13 @@
-package serveur;
+package serveur.service;
 
-import serveur.document.Abonne;
-import serveur.document.EmpruntException;
-import serveur.document.ReservationException;
+import serveur.service.documents.etat.exception.EmpruntException;
+import serveur.service.documents.etat.exception.ReservationException;
+import serveur.service.documents.IEtatDocument;
 
 public interface IDocument {
     int numero();
+    String titre();
+    IEtatDocument getEtat();
     // exception si déjà réservé ou emprunté
     void reserver (Abonne ab) throws ReservationException;
     // exception si réservé pour une autre abonné ou déjà emprunté
